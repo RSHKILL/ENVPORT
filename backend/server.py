@@ -416,8 +416,12 @@ async def assign_driver(
     if driver_obj.status != DriverStatus.AVAILABLE:
         raise HTTPException(status_code=400, detail="Driver is not available")
     
-    # Update pickup request
-    new_status_history = pickup_obj.status_history + [
+    # Update pickup request - convert existing entries to dicts if needed
+    existing_history = [
+        h.dict() if hasattr(h, 'dict') else h 
+        for h in pickup_obj.status_history
+    ]
+    new_status_history = existing_history + [
         StatusHistoryEntry(status=PickupStatus.ASSIGNED.value, by=admin.username).dict()
     ]
     
