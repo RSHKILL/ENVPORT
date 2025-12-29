@@ -437,14 +437,12 @@ class EcoPortAPITester:
     def test_cost_calculation(self):
         """Test cost calculation endpoint"""
         try:
-            params = {
-                "latitude": VALID_LOCATION["latitude"],
-                "longitude": VALID_LOCATION["longitude"],
-                "quantity": "Medium",
-                "waste_type": "Plastic"
-            }
+            # Cost calculation endpoint expects query parameters
+            lat = VALID_LOCATION["latitude"]
+            lng = VALID_LOCATION["longitude"]
+            url = f"/calculate-cost?latitude={lat}&longitude={lng}&quantity=Medium&waste_type=Plastic"
             
-            response = self.make_request('POST', '/calculate-cost', params)
+            response = self.make_request('POST', url)
             
             if response.status_code == 200:
                 data = response.json()
