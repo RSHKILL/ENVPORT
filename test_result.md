@@ -116,6 +116,9 @@ backend:
       - working: true
         agent: "main"
         comment: "JWT auth with hardcoded admin/admin123 credentials working"
+      - working: true
+        agent: "testing"
+        comment: "Comprehensive testing completed. Login/logout, invalid credentials rejection, and protected endpoint access all working correctly."
 
   - task: "Pickup Requests CRUD"
     implemented: true
@@ -128,6 +131,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Create, list, get, update pickup requests working. Pricing calculation with Haversine distance working."
+      - working: true
+        agent: "testing"
+        comment: "All CRUD operations tested successfully. Create, read, update, list all working. Cost calculation accurate (₹80.67 for 0.57km distance). Status transitions properly enforced."
 
   - task: "Service Area Restriction"
     implemented: true
@@ -140,6 +146,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Requests outside 20km radius from Siliguri depot rejected with proper message"
+      - working: true
+        agent: "testing"
+        comment: "Service area restriction working perfectly. Requests outside 20km radius correctly rejected with proper error message. Cost calculation also respects service area boundaries."
 
   - task: "Driver Management"
     implemented: true
@@ -152,6 +161,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Create driver, list drivers, update status working"
+      - working: true
+        agent: "testing"
+        comment: "Driver management fully functional. Create, list, get by ID, and status updates all working. Driver status changes (Available/Busy/Offline) working correctly."
 
   - task: "Driver Assignment Workflow"
     implemented: true
@@ -164,18 +176,24 @@ backend:
       - working: true
         agent: "main"
         comment: "Assign driver to approved requests, driver status changes to Busy, valid status transitions enforced"
+      - working: true
+        agent: "testing"
+        comment: "Driver assignment workflow working perfectly. Driver assignment to approved requests works, driver status automatically changes to Busy, and invalid status transitions are properly rejected."
 
   - task: "Ratings API"
     implemented: true
-    working: "NA"
+    working: true
     file: "backend/server.py"
     stuck_count: 0
     priority: "low"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented but not tested yet"
+      - working: true
+        agent: "testing"
+        comment: "Ratings API fully tested and working. Can create ratings for completed pickups, retrieve ratings by pickup ID, and properly validates that only completed pickups can be rated."
 
   - task: "Stats Dashboard API"
     implemented: true
@@ -188,6 +206,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Returns pending/approved/assigned/completed counts"
+      - working: true
+        agent: "testing"
+        comment: "Stats API working correctly. Returns accurate counts for pending, approved, assigned, completed, and total requests."
 
 frontend:
   - task: "Home Screen"
