@@ -270,10 +270,7 @@ class EcoPortAPITester:
             return
         
         try:
-            # First ensure request is in Pending status
-            self.test_update_pickup_request_status(request_id, "Pending")
-            
-            # Try invalid transition: Pending -> Completed
+            # Try invalid transition: Pending -> Completed (should fail)
             update_data = {"status": "Completed"}
             response = self.make_request('PUT', f'/pickup-requests/{request_id}', update_data, auth=True)
             
