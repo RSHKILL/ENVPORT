@@ -460,8 +460,14 @@ class EcoPortAPITester:
             return
         
         try:
-            # First complete the pickup request
-            self.test_update_pickup_request_status(pickup_id, "Completed")
+            # Check current status first
+            get_response = self.make_request('GET', f'/pickup-requests/{pickup_id}')
+            if get_response.status_code == 200:
+                current_status = get_response.json().get('status')
+                
+                # Only update to Completed if not already Completed
+                if current_status != "Completed":
+                    self.test_update_pickup_request_status(pickup_id, "Completed")
             
             # Create a rating
             rating_data = {
