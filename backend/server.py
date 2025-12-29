@@ -361,14 +361,23 @@ async def update_pickup_request(
                 detail=f"Invalid status transition from {current_status.value} to {new_status.value}"
             )
         
-        # Add to status history
-        update_data['status_history'] = pickup.status_history + [
+        # Add to status history - convert existing entries to dicts if needed
+        existing_history = [
+            h.dict() if hasattr(h, 'dict') else h 
+            for h in pickup.status_history
+        ]
+        update_data['status_history'] = existing_history + [
             StatusHistoryEntry(status=new_status.value, by=admin.username).dict()
         ]
     
     # Track price changes
     if 'actual_cost' in update_data and update_data['actual_cost'] is not None:
-        update_data['price_history'] = pickup.price_history + [
+        # Convert existing entries to dicts if needed
+        existing_price_history = [
+            p.dict() if hasattr(p, 'dict') else p 
+            for p in pickup.price_history
+        ]
+        update_data['price_history'] = existing_price_history + [
             PriceHistoryEntry(actual_cost=update_data['actual_cost'], by=admin.username).dict()
         ]
     
